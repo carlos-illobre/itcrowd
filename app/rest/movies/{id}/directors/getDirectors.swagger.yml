@@ -1,0 +1,89 @@
+/movies/{id}/directors:
+  get:
+    tags: 
+      - Director
+    summary:  Returns the movie's directors
+    description: Return all the directors from a movie
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: movie id
+      required: true
+      type: integer
+      example: 1
+    - in: query
+      name: page
+      schema:
+        type: number
+      description: The page number starting from 1
+      example: 1
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          properties:
+            firstName:
+              type: string
+              example: Sylvester
+            lastName:
+              type: string
+              example: Stallone
+            _links:
+              type: object
+              required:
+                - self
+                - moviesAsActor
+                - moviesAsProducer
+                - moviesAsDirector
+                - remove
+              properties:
+                self:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/people/1
+                moviesAsActor:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?actorId=1
+                moviesAsProducer:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?producerId=1
+                moviesAsDirector:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?directorId=1
+                remove:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/directors/1
+      500:
+        description: Internal server error

@@ -1,0 +1,36 @@
+/movies/{movieId}/casting/{personId}:
+  delete:
+    tags: 
+      - Actor
+    summary:  removes an actor from a movie
+    description: removes an actor/actress from a movie
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+    - name: Authorization
+      in: header
+      description: Authorization token
+      required: true
+      type: string
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjF9LCJpYXQiOjE1MTAxNTI2MDEsImV4cCI6MTUxMDIzOTAwMX0.5JmvBOkG3jkhQfZwB61o650P0XDqIijuRv41m6Sn6Qk
+    - name: movieId
+      in: path
+      description: movie id
+      required: true
+      type: integer
+      example: 1
+    - name: personId
+      in: path
+      description: actor id
+      required: true
+      type: integer
+      example: 1
+    responses:
+      204:
+        description: No content
+      404:
+        description: Not found
+      500:
+        description: Internal server error

@@ -1,0 +1,56 @@
+/people/{id}:
+  patch:
+    tags: 
+      - Person
+    summary:  Updates a person
+    description: Creates a new person
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: Person id
+      required: true
+      type: integer
+      example: 1
+    - name: Authorization
+      in: header
+      description: Authorization token
+      required: true
+      type: string
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjF9LCJpYXQiOjE1MTAxNTI2MDEsImV4cCI6MTUxMDIzOTAwMX0.5JmvBOkG3jkhQfZwB61o650P0XDqIijuRv41m6Sn6Qk
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        properties:
+          firstName:
+            type: string
+            example: Sylvester
+            description: first name
+            minLength: 1
+          lastName:
+            type: string
+            minLength: 1
+            example: Stallone
+            description: last name
+    responses:
+      204:
+        description: No content
+      400:
+        description: Bad Request
+        schema:
+          type: object
+          required:
+            - error
+          properties:
+            error:
+              type: string
+              example: Validation error, The first name is mandatory
+      404:
+        description: No content
+      500:
+        description: Internal server error

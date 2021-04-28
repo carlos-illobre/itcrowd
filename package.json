@@ -1,0 +1,67 @@
+{
+  "name": "itcrowd",
+  "version": "1.0.0",
+  "description": "REST API Challenge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node app/server.js",
+    "start:demo": "JWT_SEED=secret JWT_EXPIRES_IN=8640000 DB_URI=sqlite::memory: npm start",
+    "debug": "node debug server.js",
+    "test": "eslint --fix . && npm run test:nolint",
+    "test:nolint": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha app/**/*.test.js --file app/init.test.js",
+    "test:debug": "mocha debug app/**/*.test.js --file app/init.test.js",
+    "nodemon": "nodemon -e js,json,yml,gql",
+    "db:cli": "docker exec -it itcrowd_postgres_1 psql postgres://postgres:root@localhost:5432/postgres",
+    "dev": "docker-compose up",
+    "dev:build": "docker-compose up --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlos-illobre/itcrowd.git"
+  },
+  "keywords": [
+    "REST"
+  ],
+  "author": "Carlos Illobre",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/carlos-illobre/itcrowd/issues"
+  },
+  "homepage": "https://github.com/carlos-illobre/itcrowd#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-jest-snapshot": "^2.0.0",
+    "eslint": "^7.24.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "sqlite3": "^5.0.2",
+    "supertest": "^6.1.3"
+  },
+  "nyc": {
+    "include": [
+      "app/**/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cr-numeral": "^1.1.3",
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "halson": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "pg": "^8.6.0",
+    "sequelize": "^6.6.2",
+    "swagger-express-validator": "^1.0.2",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
+    "umzug": "^2.3.0"
+  }
+}

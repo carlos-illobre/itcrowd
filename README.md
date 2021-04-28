@@ -1,6 +1,107 @@
 # itcrowd
 ## REST API Challenge
 
+## Install
+
+For a in memory database withour extra cofiguration:
+```
+npm install
+npm run start:demo
+go to localhost:8080/rest/doc
+```
+
+If you have docker-compose installed:
+```
+npm install
+npm run dev
+go to localhost:8080/rest/doc
+```
+
+100% test coverage
+```
+npm run test
+```
+
+## Use
+Create one user:
+```
+curl -X 'POST' \
+  'http://localhost:8080/rest/users' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "some@email.com",
+  "password": "secret"
+}'
+```
+
+Login:
+```
+curl -X 'POST' \
+  'http://localhost:8080/rest/users/login' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "some@email.com",
+  "password": "secret"
+}'
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYxOTU4NDM5MiwiZXhwIjoxNjE5NTkzMDMyfQ.Ya27uTa2WjPLJ6quXqy4ypKBQ6bUFxKP19GjkUo9c8M",
+  "_links": {
+    "movies": {
+      "href": "http://localhost:8080/rest/movies"
+    },
+    "people": {
+      "href": "http://localhost:8080/rest/people"
+    }
+  }
+}
+```
+
+Use the accessToken for unsafe methods:
+```
+curl -X 'POST' \
+  'http://localhost:8080/rest/movies' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYxOTU4NDM5MiwiZXhwIjoxNjE5NTkzMDMyfQ.Ya27uTa2WjPLJ6quXqy4ypKBQ6bUFxKP19GjkUo9c8M' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "title": "Rambo",
+  "releaseYear": 1982
+}'
+```
+
+All of that can be done from Swagger, just press the button [Try it out] on each endpoint `localhost:8080/rest/doc`
+
+
+## Libraries
+
+bcryptjs: To store a hashed password in the database. The defacto standard
+body-parser: To parse the json body in express
+cr-numeral: To create the Roman numbers. The first library that I found to do this.
+express: To create the endpoints. Fast, simple and the defacto standard.
+glob: To read files. Is the best way to avoid ugly `require`s
+halson: To implement HATEOAS
+jsonwebtoken: To generate autentication tokens
+lodash: To have utility functions
+passport: Defacto standard to implement authentication
+passport-jwt: Strategy to use JWT in the authentication process
+pg: postgres driver
+sequelize: Most complete ORM in nodejs
+swagger-express-validator: Uses the rules defined in the swagger documentation as endpoint input validators
+swagger-jsdoc: Generates swagger documentation from several yml files
+swagger-ui-express: Generates an interactive web page with the documentation
+umzug: Reads and executes database migration files to generate the database schema
+chai: assertion library for the tests
+chai-jest-snapshot: integrates the Jest snapshots into chai to be used with mocha
+eslint: Find syntax errors
+mocha: Executes the test, simpler than jest
+nyc: Generates the coverage
+sqlite3: In memory database to run the tests
+supertest: Emulates ajax calls and provides some test asserts
+
+
 ## Goal
 Ensure that you, the developer, has a great grasp on how REST APIs work and can quickly implement a solution. 
 

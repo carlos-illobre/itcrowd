@@ -1,0 +1,52 @@
+/people/{id}/aliases:
+  get:
+    tags: 
+      - Person
+    summary:  Get the aliases from a person
+    description: Get the aliases from a person 
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: Person id
+      required: true
+      type: integer
+      example: 1
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          required:
+            - items
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                  - alias
+                  - _links
+                properties:
+                  alias:
+                    type: string
+                    example: The Rock
+                  _links:
+                    type: object
+                    required: 
+                      - self
+                    properties:
+                      self:
+                        type: object
+                        required:
+                          - href
+                        properties:
+                          href:
+                            type: string
+                            format: uri
+                            example: http://localhost:8080/rest/people/1/aliases/1
+      404:
+        description: Not found
+      500:
+        description: Internal server error

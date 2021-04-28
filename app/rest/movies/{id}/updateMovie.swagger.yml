@@ -1,0 +1,42 @@
+/movies/{id}:
+  patch:
+    tags: 
+      - Movie
+    summary:  Update a movie
+    description: Updates a movie
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: Movie id
+      required: true
+      type: integer
+      example: 1
+    - name: Authorization
+      in: header
+      description: Authorization token
+      required: true
+      type: string
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjF9LCJpYXQiOjE1MTAxNTI2MDEsImV4cCI6MTUxMDIzOTAwMX0.5JmvBOkG3jkhQfZwB61o650P0XDqIijuRv41m6Sn6Qk
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            example: Rambo
+            description: Movie title
+          releaseYear:
+            type: integer
+            example: 1982
+            description: Movie release date
+    responses:
+      204:
+        description: No content
+      404:
+        description: Not found
+      500:
+        description: Internal server error

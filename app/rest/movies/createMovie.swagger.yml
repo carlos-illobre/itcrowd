@@ -1,0 +1,106 @@
+/movies:
+  post:
+    tags: 
+      - Movie
+    summary:  Creates a new movie
+    description: Creates a new movie
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+    - name: Authorization
+      in: header
+      description: Authorization token
+      required: true
+      type: string
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjF9LCJpYXQiOjE1MTAxNTI2MDEsImV4cCI6MTUxMDIzOTAwMX0.5JmvBOkG3jkhQfZwB61o650P0XDqIijuRv41m6Sn6Qk
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - title
+          - releaseYear
+        properties:
+          title:
+            type: string
+            example: Rambo
+            description: Movie title
+            minLength: 1
+          releaseYear:
+            type: integer
+            minimum: 1800
+            example: 1982
+            description: Movie release date
+    responses:
+      201:
+        description: Created
+        headers:
+          Location:
+            description: Created movie uri
+            type: string
+            format: uri
+            example: http://localhost:8080/rest/movies/1
+        schema:
+          type: object
+          required:
+            - _links
+          properties:
+            _links:
+              type: object
+              required:
+                - self
+                - casting
+                - directors
+                - producers
+              properties:
+                self:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1
+                casting:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/casting
+                directors:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/directors
+                producers:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/producers
+      400:
+        description: Bad Request
+        schema:
+          type: object
+          required:
+            - error
+          properties:
+            error:
+              type: string
+              example: Validation error, The title is mandatory
+      500:
+        description: Internal server error

@@ -1,0 +1,87 @@
+/people/{id}:
+  get:
+    tags: 
+      - Person
+    summary:  Get one person
+    description: Return a person by id 
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: Person id
+      required: true
+      type: integer
+      example: 1
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          required:
+            - firstName
+            - lastName
+            - _links
+          properties:
+            firstName:
+              type: string
+              example: Sylvester
+            lastName:
+              type: string
+              example: Stallone
+            _links:
+              type: object
+              required:
+                - self
+                - aliases
+                - moviesAsActor
+                - moviesAsDirector
+                - moviesAsProducer
+              properties:
+                self:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/people/1
+                aliases:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/people/1/aliases
+                moviesAsActor:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?actorId=1
+                moviesAsDirector:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?directorId=1
+                moviesAsProducer:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies?producerId=1
+      500:
+        description: Internal server error

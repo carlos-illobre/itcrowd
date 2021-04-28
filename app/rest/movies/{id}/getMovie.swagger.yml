@@ -1,0 +1,77 @@
+/movies/{id}:
+  get:
+    tags: 
+      - Movie
+    summary:  Get one movie
+    description: Return a movie by id 
+    produces:
+      - application/json
+    parameters:
+    - name: id
+      in: path
+      description: Movie id
+      required: true
+      type: integer
+      example: 1
+    responses:
+      200:
+        description: OK
+        schema:
+          type: object
+          required:
+            - title
+            - releaseYear
+            - _links
+          properties:
+            title:
+              type: string
+              example: Rambo
+            releaseYear:
+              type: string
+              example: MCMLXXXII
+            _links:
+              type: object
+              required:
+                - self
+                - casting
+                - directors
+                - producers
+              properties:
+                self:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1
+                casting:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/casting
+                directors:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/directors
+                producers:
+                  type: object
+                  required:
+                    - href
+                  properties:
+                    href:
+                      type: string
+                      format: uri
+                      example: http://localhost:8080/rest/movies/1/producers
+      500:
+        description: Internal server error

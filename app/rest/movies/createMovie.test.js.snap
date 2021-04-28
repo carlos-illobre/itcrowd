@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`POST rest/movies return 400 if no release year 1`] = `
+Object {
+  "errors": Array [
+    Object {
+      "dataPath": "",
+      "keyword": "required",
+      "message": "should have required property 'releaseYear'",
+      "params": Object {
+        "missingProperty": "releaseYear",
+      },
+      "schemaPath": "#/required",
+    },
+  ],
+  "message": "Request schema validation failed for POST/rest/movies",
+}
+`;
+
+exports[`POST rest/movies return 400 if the release year is not a number 1`] = `
+Object {
+  "errors": Array [
+    Object {
+      "dataPath": ".releaseYear",
+      "keyword": "type",
+      "message": "should be integer",
+      "params": Object {
+        "type": "integer",
+      },
+      "schemaPath": "#/properties/releaseYear/type",
+    },
+  ],
+  "message": "Request schema validation failed for POST/rest/movies",
+}
+`;
+
+exports[`POST rest/movies return 400 if the title is empty 1`] = `
+Object {
+  "errors": Array [
+    Object {
+      "dataPath": ".title",
+      "keyword": "minLength",
+      "message": "should NOT be shorter than 1 characters",
+      "params": Object {
+        "limit": 1,
+      },
+      "schemaPath": "#/properties/title/minLength",
+    },
+  ],
+  "message": "Request schema validation failed for POST/rest/movies",
+}
+`;

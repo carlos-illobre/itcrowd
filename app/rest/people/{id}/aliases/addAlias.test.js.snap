@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`POST rest/people/{id}/aliases return 400 if the alias is empty 1`] = `
+Object {
+  "errors": Array [
+    Object {
+      "dataPath": ".alias",
+      "keyword": "minLength",
+      "message": "should NOT be shorter than 1 characters",
+      "params": Object {
+        "limit": 1,
+      },
+      "schemaPath": "#/properties/alias/minLength",
+    },
+  ],
+}
+`;
