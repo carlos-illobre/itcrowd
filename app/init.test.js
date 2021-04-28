@@ -8,7 +8,7 @@ before(async function() {
   process.env.NODE_ENV = 'test'
   process.env.JWT_SEED = 'secret'
   process.env.JWT_EXPIRES_IN = 86400
-  process.env.DB_URI = 'sqlite::memory:'
+  process.env.DATABASE_URL = 'sqlite::memory:'
 
   chaiJestSnapshot.resetSnapshotRegistry()
   
