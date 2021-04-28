@@ -106,6 +106,146 @@ supertest: Emulates ajax calls and provides some test asserts
 
 But all of that is deprecated, a graphql implementation fits much better to solve this problem.
 
+# How to create a new endpoint
+
+To create a new endpoint you just need to create a new file into `scheduler-api/app/api` or in any subfolder.
+If the file exports an express Router then the Router will be automatically injected into the express application:
+
+```
+// scheduler-api/app/api/v1/my/url/helloworld.js
+const express = require('express')
+
+module.exports = express
+  .Router({mergeParams: true})
+  .get('/my/url', (req, res, next) => {
+    res.send('Hello')
+  })  
+
+```
+
+Now just save it and if the server was started with `npm run dev` or `npm run dev:build` then the endpoint will be there: http://localhost:8080/api/my/url
+(The urls of all the automatic injected Routers will always start with `/api`).
+The folder structure should be like the url path, so if the endpoint is `GET /my/url/helloword` then the file should be in `scheduler-api/app/api/my/url/helloworld.js`,
+
+
+# How to create a sequelizer entity (and a Migration)
+
+Go to the `models` folder and create file like this to define the sequelize entity:
+```
+// scheduler-api/models/Sport.js
+module.exports = (sequelize, DataTypes) => {
+
+    const Sport = sequelize.define('Sport', {
+        name: DataTypes.STRING,
+    }, {
+        tableName: 'sports',
+    });
+    
+    return Sport;
+    
+};
+```
+Now go to the `migrations` folder and create a file like this:
+```
+// scheduler-api/migrations/20171101181703-create-sport.js
+module.exports = {
+    
+    up(queryInterface, Sequelize) {
+        return queryInterface.createTable('sports', {
+            id: {
+                allowNull: false,
+                autoIncrement: true,    
+                primaryKey: true,
+                type: Sequelize.INTEGER,
+            },
+            name: {
+                allowNull: false,
+                type: Sequelize.STRING(100),
+            },
+            created: {
+                allowNull: false,
+                type: Sequelize.DATE,   
+            },
+            modified: {
+                allowNull: false,
+                type: Sequelize.DATE,
+            },
+            deleted: {
+                type: Sequelize.DATE,
+            },
+        })
+    },
+
+    down(queryInterface, Sequelize) {
+        return queryInterface.dropTable('sports')
+    }
+
+};
+```
+The filename must start with a timestamp to be recognized and executed. All the new migrations will be automatically executed every time the node server is up.
+
+# How to execute Queries from the endpoint
+
+Every endpoint will have all the sequelize models injected into the `req.db` parameter, so we can do this:
+
+```
+// scheduler-api/app/api/v1/sports/getSports.js
+const express = require('express');
+    
+module.exports = express       
+.Router({mergeParams: true})   
+.get('/v1/sports', async (req, res, next) => {
+  
+    const sports = await req.db.Sport.findAll({
+        raw: true,
+    });
+    res.send({ sports });
+
+});  
+```
+You should never return the entity, you can use `raw: true` to return the raw data.
+
+# How to create the Swagger documentation:
+
+Just create a file into the endpoint's folder with the extension `.swagger.yaml` like this:
+```
+/v1/sports:
+    get:
+        tags:                  
+            - sports           
+        summary: Get all the sports     
+        description: Get all the sports. This is a public endpoint.
+        operationId: getSports.js       
+        produces:
+            - application/json 
+        responses:             
+            200:
+                description: OK
+                schema:        
+                    type: object                    
+                    required:  
+                        - sports                        
+                    properties:
+                        sports:
+                            type: array                     
+                            items:                          
+                                type: object                    
+                                required:                       
+                                    - id                            
+                                    - name                          
+                                properties:                     
+                                    id:                             
+                                        type: number                    
+                                        example: 1                      
+                                    name:                           
+                                        type: string                    
+                                        example: Soccer                 
+            500:               
+                description: Internal server error
+```
+You should put an example value to each property.
+The file must use the Swagger 2.0 format.
+
 
 ## Goal
 Ensure that you, the developer, has a great grasp on how REST APIs work and can quickly implement a solution. 
