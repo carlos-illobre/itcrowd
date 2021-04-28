@@ -6,14 +6,14 @@ const createUmzug = require('./createUmzug.js')
 
 module.exports = async () => {
 
-  const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialectOptions: {
+  const sequelize = new Sequelize(process.env.DATABASE_URL/*, {
+    dialectOptions: { // Required by Heroku
       ssl: {
         require: true,
         rejectUnauthorized: false,
       },
     },
-  })
+  }*/)
 
   await createUmzug({ sequelize }).up()
 
