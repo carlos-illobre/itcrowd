@@ -9,6 +9,7 @@ module.exports = async () => {
   const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialectOptions: {
       ssl: true,
+      rejectUnauthorized: false,
     },
   })
 
