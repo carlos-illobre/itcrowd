@@ -112,7 +112,7 @@ To create a new endpoint you just need to create a new file into `scheduler-api/
 If the file exports an express Router then the Router will be automatically injected into the express application:
 
 ```
-// app/api/v1/my/url/helloworld.js
+// app/rest/my/url/helloworld.js
 const express = require('express')
 
 module.exports = express
@@ -182,12 +182,12 @@ The filename must start with a timestamp to be recognized and executed. All the 
 Every endpoint will have all the sequelize models injected into the `req.db` parameter, so we can do this:
 
 ```
-// app/api/v1/sports/getSports.js
+// app/rest/sports/getSports.js
 const express = require('express');
     
 module.exports = express       
 .Router({mergeParams: true})   
-.get('/v1/sports', async (req, res, next) => {
+.get('/sports', async (req, res, next) => {
   
     const sports = await req.db.Sport.findAll({
         raw: true,
@@ -202,7 +202,7 @@ You should never return the entity, you can use `raw: true` to return the raw da
 
 Just create a file into the endpoint's folder with the extension `.swagger.yml` like this:
 ```
-/v1/sports:
+/sports:
     get:
         tags:                  
             - sports           
