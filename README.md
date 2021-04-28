@@ -1,5 +1,8 @@
-# itcrowd
-## REST API Challenge
+# itcrowd - REST API Challenge
+
+Deployed in Heroku
+
+https://itcrowd-rest-api-challenge.herokuapp.com/rest/docs
 
 ## Install
 
@@ -100,6 +103,8 @@ mocha: Executes the test, simpler than jest
 nyc: Generates the coverage
 sqlite3: In memory database to run the tests
 supertest: Emulates ajax calls and provides some test asserts
+
+But all of that is deprecated, a graphql implementation fits much better to solve this problem.
 
 
 ## Goal
