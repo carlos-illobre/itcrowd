@@ -6,7 +6,11 @@ const createUmzug = require('./createUmzug.js')
 
 module.exports = async () => {
 
-  const sequelize = new Sequelize(process.env.DATABASE_URL, { native: true })
+  const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+      ssl: true,
+    },
+  })
 
   await createUmzug({ sequelize }).up()
 
