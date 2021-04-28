@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node app/server.js",
-    "start:demo": "JWT_SEED=secret JWT_EXPIRES_IN=8640000 DB_URI=sqlite::memory: npm start",
+    "start:demo": "JWT_SEED=secret JWT_EXPIRES_IN=8640000 DATABASE_URL=sqlite::memory: npm start",
     "debug": "node debug server.js",
     "test": "eslint --fix . && npm run test:nolint",
     "test:nolint": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha app/**/*.test.js --file app/init.test.js",
