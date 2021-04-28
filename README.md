@@ -112,7 +112,7 @@ To create a new endpoint you just need to create a new file into `scheduler-api/
 If the file exports an express Router then the Router will be automatically injected into the express application:
 
 ```
-// scheduler-api/app/api/v1/my/url/helloworld.js
+// app/api/v1/my/url/helloworld.js
 const express = require('express')
 
 module.exports = express
@@ -123,17 +123,17 @@ module.exports = express
 
 ```
 
-Now just save it and if the server was started with `npm run dev` or `npm run dev:build` then the endpoint will be there: http://localhost:8080/api/my/url
-(The urls of all the automatic injected Routers will always start with `/api`).
-The folder structure should be like the url path, so if the endpoint is `GET /my/url/helloword` then the file should be in `scheduler-api/app/api/my/url/helloworld.js`,
+Now just save it and run the server, then the endpoint will be there: http://localhost:8080/rest/my/url
+(The urls of all the automatic injected Routers will always start with `/rest`).
+The folder structure should be like the url path, so if the endpoint is `GET /my/url/helloword` then the file should be in `app/rest/my/url/helloworld.js`,
 
 
 # How to create a sequelizer entity (and a Migration)
 
 Go to the `models` folder and create file like this to define the sequelize entity:
 ```
-// scheduler-api/models/Sport.js
-module.exports = (sequelize, DataTypes) => {
+// app/db/models/Sport.js
+module.exports = ({ sequelize, DataTypes }) => {
 
     const Sport = sequelize.define('Sport', {
         name: DataTypes.STRING,
@@ -147,39 +147,32 @@ module.exports = (sequelize, DataTypes) => {
 ```
 Now go to the `migrations` folder and create a file like this:
 ```
-// scheduler-api/migrations/20171101181703-create-sport.js
+// app/db/migrations/20171101181703-create-sport.js
+const { INTEGER, STRING, DATE } = require('sequelize')
+
 module.exports = {
-    
-    up(queryInterface, Sequelize) {
+    up(queryInterface) {
         return queryInterface.createTable('sports', {
             id: {
                 allowNull: false,
                 autoIncrement: true,    
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: INTEGER,
             },
             name: {
                 allowNull: false,
-                type: Sequelize.STRING(100),
+                type: STRING(100),
             },
-            created: {
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,   
             },
-            modified: {
+            updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
-            },
-            deleted: {
                 type: Sequelize.DATE,
             },
         })
     },
-
-    down(queryInterface, Sequelize) {
-        return queryInterface.dropTable('sports')
-    }
-
 };
 ```
 The filename must start with a timestamp to be recognized and executed. All the new migrations will be automatically executed every time the node server is up.
@@ -189,7 +182,7 @@ The filename must start with a timestamp to be recognized and executed. All the 
 Every endpoint will have all the sequelize models injected into the `req.db` parameter, so we can do this:
 
 ```
-// scheduler-api/app/api/v1/sports/getSports.js
+// app/api/v1/sports/getSports.js
 const express = require('express');
     
 module.exports = express       
@@ -207,7 +200,7 @@ You should never return the entity, you can use `raw: true` to return the raw da
 
 # How to create the Swagger documentation:
 
-Just create a file into the endpoint's folder with the extension `.swagger.yaml` like this:
+Just create a file into the endpoint's folder with the extension `.swagger.yml` like this:
 ```
 /v1/sports:
     get:
