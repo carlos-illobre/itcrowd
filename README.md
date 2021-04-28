@@ -6,7 +6,7 @@ https://itcrowd-rest-api-challenge.herokuapp.com/rest/docs
 
 ## Install
 
-For a in memory database withour extra cofiguration:
+For a in memory database without extra cofiguration:
 ```
 npm install
 npm run start:demo
@@ -80,29 +80,29 @@ All of that can be done from Swagger, just press the button [Try it out] on each
 
 ## Libraries
 
-bcryptjs: To store a hashed password in the database. The defacto standard
-body-parser: To parse the json body in express
-cr-numeral: To create the Roman numbers. The first library that I found to do this.
-express: To create the endpoints. Fast, simple and the defacto standard.
-glob: To read files. Is the best way to avoid ugly `require`s
-halson: To implement HATEOAS
-jsonwebtoken: To generate autentication tokens
-lodash: To have utility functions
-passport: Defacto standard to implement authentication
-passport-jwt: Strategy to use JWT in the authentication process
-pg: postgres driver
-sequelize: Most complete ORM in nodejs
-swagger-express-validator: Uses the rules defined in the swagger documentation as endpoint input validators
-swagger-jsdoc: Generates swagger documentation from several yml files
-swagger-ui-express: Generates an interactive web page with the documentation
-umzug: Reads and executes database migration files to generate the database schema
-chai: assertion library for the tests
-chai-jest-snapshot: integrates the Jest snapshots into chai to be used with mocha
-eslint: Find syntax errors
-mocha: Executes the test, simpler than jest
-nyc: Generates the coverage
-sqlite3: In memory database to run the tests
-supertest: Emulates ajax calls and provides some test asserts
+* bcryptjs: To store a hashed password in the database. The defacto standard
+* body-parser: To parse the json body in express
+* cr-numeral: To create the Roman numbers. The first library that I found to do this.
+* express: To create the endpoints. Fast, simple and the defacto standard.
+* glob: To read files. Is the best way to avoid ugly `require`s
+* halson: To implement HATEOAS
+* jsonwebtoken: To generate autentication tokens
+* lodash: To have utility functions
+* passport: Defacto standard to implement authentication
+* passport-jwt: Strategy to use JWT in the authentication process
+* pg: postgres driver
+* sequelize: Most complete ORM in nodejs
+* swagger-express-validator: Uses the rules defined in the swagger documentation as endpoint input validators
+* swagger-jsdoc: Generates swagger documentation from several yml files
+* swagger-ui-express: Generates an interactive web page with the documentation
+* umzug: Reads and executes database migration files to generate the database schema
+* chai: assertion library for the tests
+* chai-jest-snapshot: integrates the Jest snapshots into chai to be used with mocha
+* eslint: Find syntax errors
+* mocha: Executes the test, simpler than jest
+* nyc: Generates the coverage
+* sqlite3: In memory database to run the tests
+* supertest: Emulates ajax calls and provides some test asserts
 
 But all of that is deprecated, a graphql implementation fits much better to solve this problem.
 
